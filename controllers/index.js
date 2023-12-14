@@ -1,30 +1,34 @@
-import ethers from "ethers"
-import crypto from "crypto"
+import { NFTStorage, File } from "nft.storage"
+import mime from "mime"
+import fs from "fs"
+import path from "path"
+import { config } from "dotenv"
 
-const createWallet = async () => {
-    const randBytes = crypto.randomBytes(32).toString("hex")
-    const privateKey = `0x${randBytes}`
-    console.log("Private Key", privateKey)
+config()
 
-    const wallet = new ethers.Wallet(privateKey)
-    console.log("Public Address", wallet)
+const fileFromPath = async (filePath) => {
+    const content = await fs.promises.readFile(filePath)
+    const type = mime.getType(filePath)
 
-    return wallet
+    return new File([content], path.basename(filePath), { type })
 }
 
-export const createIDBotDID = async (data) => {
-    const {
-        name,
-        email,
-        phone,
-        age,
-        country,
-        state,
-        passport
-    } = data
-    
-    const wallet = createWallet()
+export const storeNFTs = async (arts) => {
+    const nftstorage = new NFTStorage({ token: process.env.NFT_STORAGE_KEY })
+    const nfts = []
 
+    for (let i = 0; i < arts.length; i++) {
+        const image = await fileFromPath(arts[i].imagePath)
 
-    return { wallet }
+        const nft = await nftstorage.store({
+            image,
+            name : arts[i].name,
+            description : arts[i].description
+        })
+        console.log(nft)
+
+        nfts.push(nft)
+    }
+
+    return nfts
 }
