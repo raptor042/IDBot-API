@@ -4,22 +4,19 @@ import { getSigner } from "./init.js"
 
 import IDBot_ABI from "./IDBot.json" assert {type:"json"}
 
-export const createIDBotDID = async (data, url, hash) => {
+export const createIDBotDID = async (data, url) => {
     const ABI = JSON.stringify(IDBot_ABI)
     const idbot = new ethers.Contract(
         IDBot_CA,
         JSON.parse(ABI).abi,
         getSigner()
     )
-    const profile = undefined
-    const profileId = undefined
 
     const country = data.country.split(",")[0]
     const phone = `+${data.country.split(",")[2]} ${data.phone}`
     const dev = data.dev == "true" ? true : false
-    console.log(country, phone, dev, await idbot._profiles(1))
-    // console.log(await idbot.profileIds(1))
-    // console.log(await idbot.profiles(await idbot.profileIds(0)))
+    console.log(country, phone, dev)
+    // console.log(await await idbot._profiles(1))
 
     const _profile = await idbot.createProfile(
         data.name,
@@ -33,13 +30,11 @@ export const createIDBotDID = async (data, url, hash) => {
         data.address,
         url,
         data.account,
-        hash
+        Number(data.phone)
     )
     console.log(_profile)
 
-    idbot.on("CreateProfile", (profile, owner, profileId, e) => {
+    await idbot.on("CreateProfile", (profile, owner, profileId, e) => {
         console.log(`A user with public address : ${owner} has created an IDBot profile at ${profile}. Your IDBot profile ID is ${profileId}.`)
     })
-
-    return { profile, profileId }
 }

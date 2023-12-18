@@ -47,11 +47,9 @@ app.post("/profile", upload.fields(fields), async (req, res) => {
             }
         ]
     )
+    await createIDBotDID(req.body, nfts[0].url)
 
-    const hash = req.body.phone
-    const idbot = createIDBotDID(req.body, hash, nfts[0].url)
-
-    return res.json({ ...idbot, nfts })
+    return res.json({ nfts })
 })
 
 app.listen(PORT, (err) => {
