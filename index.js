@@ -2,13 +2,16 @@ import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
 import multer from "multer"
-import { storeNFTs } from "./controllers/index.js"
+import { decryptPassord, encryptPassword, storeNFTs } from "./controllers/index.js"
 import { config } from "dotenv"
-import { createIDBotDID } from "./__web3__/index.js"
+import { createIDBotDID, unverifyIDBotProfile, verifyIDBotProfile } from "./__web3__/index.js"
+import { addAdmin, connectDB, getAdmin } from "./__db__/index.js"
 
 config()
 
 const { PORT } = process.env
+
+connectDB()
 
 const app = express()
 
@@ -47,9 +50,39 @@ app.post("/profile", upload.fields(fields), async (req, res) => {
             }
         ]
     )
-    await createIDBotDID(req.body, nfts[0].url)
+    await createIDBotDID(req.body, nfts)
 
     return res.json({ nfts })
+})
+
+app.post("/signup", async (req, res) => {
+    const password = await encryptPassword(req.body.password)
+    const admin = await addAdmin(
+        req.body.username,
+        password,
+        req.body.address
+    )
+
+    return res.status(200).json({ ...admin })
+})
+
+app.post("/login", async (req, res) => {
+    const admin = await getAdmin(req.body.address)
+    console.log(req.body)
+    const password = await decryptPassord(
+        req.body.password,
+        admin.password
+    )
+
+    password ? res.status(200).send("Successful") : res.status(400).send("Failed")
+})
+
+app.get("/verify/:profile", async (req, res) => {
+    const verify = await verifyIDBotProfile(req.params.profile)    
+})
+
+app.get("/unverify/:profile", async (req, res) => {
+    const unverify = await unverifyIDBotProfile(req.params.profile)
 })
 
 app.listen(PORT, (err) => {
