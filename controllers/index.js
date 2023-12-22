@@ -3,7 +3,7 @@ import mime from "mime"
 import fs from "fs"
 import path from "path"
 import { config } from "dotenv"
-//import bcrypt from "bcrypt"
+import bcrypt from "bcrypt"
 
 config()
 
@@ -34,17 +34,17 @@ export const storeNFTs = async (arts) => {
     return nfts
 }
 
-// export const encryptPassword = async (password) => {
-//     const rounds = 10
-//     const hash = await bcrypt.hash(password, rounds)
-//     console.log(rounds, hash)
+export const encryptPassword = async (password) => {
+    const rounds = 10
+    const hash = await bcrypt.hash(password, rounds)
+    console.log(rounds, hash)
 
-//     return hash
-// }
+    return hash
+}
 
-// export const decryptPassord = async (password, hash) => {
-//     const _password = await bcrypt.compare(password, hash)
-//     console.log(_password)
+export const decryptPassord = async (password, hash) => {
+    const _password = await bcrypt.compare(password, hash)
+    console.log(_password)
 
-//     return _password
-// }
+    return _password
+}

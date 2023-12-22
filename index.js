@@ -2,7 +2,7 @@ import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
 import multer from "multer"
-import { storeNFTs } from "./controllers/index.js"
+import { decryptPassord, encryptPassword, storeNFTs } from "./controllers/index.js"
 import { config } from "dotenv"
 import { createIDBotDID, unverifyIDBotProfile, verifyIDBotProfile } from "./__web3__/index.js"
 import { addAdmin, connectDB, getAdmin } from "./__db__/index.js"
@@ -56,9 +56,10 @@ app.post("/profile", upload.fields(fields), async (req, res) => {
 })
 
 app.post("/signup", async (req, res) => {
+    const password = await encryptPassword(req.body.password)
     const admin = await addAdmin(
         req.body.username,
-        req.body.password,
+        password,
         req.body.address
     )
 
@@ -68,12 +69,16 @@ app.post("/signup", async (req, res) => {
 app.post("/login", async (req, res) => {
     const admin = await getAdmin(req.body.address)
     console.log(req.body)
+    const password = await decryptPassord(
+        req.body.password, 
+        admin.password
+    )
 
-    req.body.password == admin.password ? res.status(200).send("Successful") : res.status(400).send("Failed")
+    password ? res.status(200).send("Successful") : res.status(400).send("Failed")
 })
 
 app.get("/verify/:profile", async (req, res) => {
-    const verify = await verifyIDBotProfile(req.params.profile)    
+    const verify = await verifyIDBotProfile(req.params.profile)
 })
 
 app.get("/unverify/:profile", async (req, res) => {
