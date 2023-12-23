@@ -4,7 +4,7 @@ import cors from "cors"
 import multer from "multer"
 import { decryptPassord, encryptPassword, storeNFTs } from "./controllers/index.js"
 import { config } from "dotenv"
-import { createIDBotDID, unverifyIDBotProfile, verifyIDBotProfile } from "./__web3__/index.js"
+import { createIDBotDID, getProfileAddressI, unsubscribe, unverifyIDBotProfile, verifyIDBotProfile } from "./__web3__/index.js"
 import { addAdmin, connectDB, getAdmin } from "./__db__/index.js"
 
 config()
@@ -12,6 +12,8 @@ config()
 const { PORT } = process.env
 
 connectDB()
+
+setInterval(unsubscribe, 1000*60*60*24)
 
 const app = express()
 
@@ -83,6 +85,18 @@ app.get("/verify/:profile", async (req, res) => {
 
 app.get("/unverify/:profile", async (req, res) => {
     const unverify = await unverifyIDBotProfile(req.params.profile)
+})
+
+app.get("/profileI/:address", async (req, res) => {
+    const profile = getProfileAddressI(req.params.address)
+
+    return res.status(200).send(profile)
+})
+
+app.get("/profileII/:number", async (req, res) => {
+    const profile = getProfileAddressI(req.params.number)
+
+    return res.status(200).send(profile)
 })
 
 app.listen(PORT, (err) => {

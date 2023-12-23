@@ -17,7 +17,6 @@ export const createIDBotDID = async (data, nfts) => {
     const phone = `+${data.country.split(",")[2]} ${data.phone}`
     const dev = data.dev == "true" ? true : false
     console.log(country, phone, dev, nfts)
-    // console.log(await await idbot._profiles(1))
 
     const _profile = await idbot.createProfile(
         data.name,
@@ -62,4 +61,44 @@ export const unverifyIDBotProfile = async profile => {
 
     const unverify = await idbot_profile.removeVerification()
     console.log(unverify)
+}
+
+export const unsubscribe = async () => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
+        JSON.parse(ABI).abi,
+        getSigner()
+    )
+
+    const unsubscribe = await idbot.unsubscribe()
+    console.log(unsubscribe)
+}
+
+export const getProfileAddressI = async address => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
+        JSON.parse(ABI).abi,
+        getSigner()
+    )
+
+    const profile = await idbot.profiles(address)
+    console.log(profile)
+
+    return profile
+}
+
+export const getProfileAddressII = async idbot_number => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
+        JSON.parse(ABI).abi,
+        getSigner()
+    )
+
+    const profile = await idbot.profiles_(idbot_number)
+    console.log(profile)
+    
+    return profile
 }
