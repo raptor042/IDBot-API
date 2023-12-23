@@ -4,7 +4,25 @@ import cors from "cors"
 import multer from "multer"
 import { decryptPassord, encryptPassword, storeNFTs } from "./controllers/index.js"
 import { config } from "dotenv"
-import { createIDBotDID, getProfileAddressI, unsubscribe, unverifyIDBotProfile, verifyIDBotProfile } from "./__web3__/index.js"
+import { 
+    createIDBotDID,
+    getAge,
+    getAddress,
+    getCountry,
+    getDescription,
+    getEmail,
+    getName,
+    getPhone,
+    getProfileAddressI, 
+    getProfileAddressII, 
+    getProfilePic, 
+    getProjects, 
+    getScore, 
+    getState, 
+    unsubscribe, 
+    unverifyIDBotProfile, 
+    verifyIDBotProfile,
+} from "./__web3__/index.js"
 import { addAdmin, connectDB, getAdmin } from "./__db__/index.js"
 
 config()
@@ -94,9 +112,75 @@ app.get("/profileI/:address", async (req, res) => {
 })
 
 app.get("/profileII/:number", async (req, res) => {
-    const profile = getProfileAddressI(req.params.number)
+    const profile = getProfileAddressII(req.params.number)
 
     return res.status(200).send(profile)
+})
+
+app.get("/name/:profile", async (req, res) => {
+    const name = getName(req.params.profile)
+
+    return res.status(200).send(name)
+})
+
+app.get("/description/:profile", async (req, res) => {
+    const description = getDescription(req.params.profile)
+
+    return res.status(200).send(description)
+})
+
+app.get("/email/:profile", async (req, res) => {
+    const email = getEmail(req.params.profile)
+
+    return res.status(200).send(email)
+})
+
+app.get("/age/:profile", async (req, res) => {
+    const age = getAge(req.params.profile)
+
+    return res.status(200).send(age)
+})
+
+app.get("/country/:profile", async (req, res) => {
+    const country = getCountry(req.params.profile)
+
+    return res.status(200).send(country)
+})
+
+app.get("/state/:profile", async (req, res) => {
+    const state = getState(req.params.profile)
+
+    return res.status(200).send(state)
+})
+
+app.get("/phone/:profile", async (req, res) => {
+    const phone = getPhone(req.params.profile)
+
+    return res.status(200).send(phone)
+})
+
+app.get("/address/:profile", async (req, res) => {
+    const address = getAddress(req.params.profile)
+
+    return res.status(200).send(address)
+})
+
+app.get("/profile_pic/:profile", async (req, res) => {
+    const profile_pic = getProfilePic(req.params.profile)
+
+    return res.status(200).send(profile_pic)
+})
+
+app.get("/score/:profile", async (req, res) => {
+    const score = getScore(req.params.profile)
+
+    return res.status(200).send(score)
+})
+
+app.get("/projects/:profile", async (req, res) => {
+    const projects = getProjects(req.params.profile)
+
+    return res.status(200).send(projects)
 })
 
 app.listen(PORT, (err) => {
