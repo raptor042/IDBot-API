@@ -221,14 +221,14 @@ export const getProjects = async profile => {
     console.log(projects)
 
     const _projects = [
-        projects[0],
-        projects[1],
-        projects[2],
-        projects[3],
-        projects[8],
-        projects[9],
-        projects[10],
-        projects[11]
+        projects[0][0],
+        projects[0][1],
+        projects[0][2],
+        projects[0][3],
+        projects[0][8],
+        projects[0][9],
+        projects[0][10],
+        projects[0][11]
     ]
 
     return _projects
