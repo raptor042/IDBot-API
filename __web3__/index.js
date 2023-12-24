@@ -219,6 +219,17 @@ export const getProjects = async profile => {
 
     const projects = await idbot_profile.getProjects()
     console.log(projects)
-    
-    return projects
+
+    const _projects = [
+        projects[0],
+        projects[1],
+        projects[2],
+        projects[3],
+        projects[8],
+        projects[9],
+        projects[10],
+        projects[11]
+    ]
+
+    return _projects
 }
