@@ -238,9 +238,9 @@ export const getScore = async profile => {
     )
 
     const score = await idbot_profile.getReputationScore()
-    console.log(score)
+    console.log(Number(score))
     
-    return score
+    return Number(score)
 }
 
 export const getProjects = async profile => {
