@@ -228,7 +228,7 @@ export const getProjects = async profile => {
         projects[0][8],
         projects[0][9],
         projects[0][10],
-        projects[0][11]
+        Number(projects[0][11])
     ]
 
     return _projects
