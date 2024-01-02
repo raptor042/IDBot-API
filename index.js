@@ -11,8 +11,6 @@ import {
     getEmail,
     getName,
     getPhone,
-    getProfileAddressI, 
-    getProfileAddressII, 
     getProfilePic, 
     getProjects, 
     getScore, 
@@ -20,6 +18,8 @@ import {
     unsubscribe, 
     unverifyIDBotProfile, 
     verifyIDBotProfile,
+    getIDBotNumber,
+    getUser,
 } from "./__web3__/index.js"
 import { addAdmin, connectDB, getAdmin } from "./__db__/index.js"
 
@@ -66,16 +66,16 @@ app.get("/unverify/:profile", async (req, res) => {
     const unverify = await unverifyIDBotProfile(req.params.profile)
 })
 
-app.get("/profileI/:address", async (req, res) => {
-    const profile = await getProfileAddressI(req.params.address)
+app.get("/user/:profile", async (req, res) => {
+    const user = await getUser(req.params.profile)
 
-    return res.status(200).send(profile)
+    return res.status(200).send(user)
 })
 
-app.get("/profileII/:number", async (req, res) => {
-    const profile = await getProfileAddressII(req.params.number)
+app.get("/number/:profile", async (req, res) => {
+    const idbot_number = await getIDBotNumber(req.params.profile)
 
-    return res.status(200).send(profile)
+    return res.status(200).send(idbot_number)
 })
 
 app.get("/name/:profile", async (req, res) => {

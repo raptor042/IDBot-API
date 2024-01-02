@@ -3,29 +3,28 @@ import { IDBot_CA } from "./config.js"
 import { getProvider, getSigner } from "./init.js"
 
 import IDBot_ABI from "./IDBot.json" assert {type:"json"}
-import Profile_ABI from "./Profile.json" assert {type:"json"}
 
-export const verifyIDBotProfile = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
+export const verifyIDBotProfile = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
         JSON.parse(ABI).abi,
         getSigner()
     )
 
-    const verify = await idbot_profile.addVerification()
+    const verify = await idbot.addVerification(user)
     console.log(verify)
 }
 
-export const unverifyIDBotProfile = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
+export const unverifyIDBotProfile = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
         JSON.parse(ABI).abi,
         getSigner()
     )
 
-    const unverify = await idbot_profile.removeVerification()
+    const unverify = await idbot.removeVerification(user)
     console.log(unverify)
 }
 
@@ -41,7 +40,7 @@ export const unsubscribe = async () => {
     console.log(unsubscribe)
 }
 
-export const getProfileAddressI = async address => {
+export const getUser = async user => {
     const ABI = JSON.stringify(IDBot_ABI)
     const idbot = new ethers.Contract(
         IDBot_CA,
@@ -49,175 +48,175 @@ export const getProfileAddressI = async address => {
         getSigner()
     )
 
-    const profile = await idbot.profiles(address)
-    console.log(profile)
-
-    return profile
-}
-
-export const getProfileAddressII = async idbot_number => {
-    const ABI = JSON.stringify(IDBot_ABI)
-    const idbot = new ethers.Contract(
-        IDBot_CA,
-        JSON.parse(ABI).abi,
-        getSigner()
-    )
-
-    const profile = await idbot.profiles_(idbot_number)
-    console.log(profile)
-    
-    return profile
-}
-
-export const getName = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
-        JSON.parse(ABI).abi,
-        getSigner()
-    )
-
-    const name = await idbot_profile.getName()
+    const name = await idbot.getUser(user)
     console.log(name)
     
     return name
 }
 
-export const getDescription = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
+export const getIDBotNumber = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
         JSON.parse(ABI).abi,
         getSigner()
     )
 
-    const description = await idbot_profile.getDescription()
+    const name = await idbot.getIDBotNumber(user)
+    console.log(name)
+    
+    return name
+}
+
+export const getName = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
+        JSON.parse(ABI).abi,
+        getSigner()
+    )
+
+    const name = await idbot.getName(user)
+    console.log(name)
+    
+    return name
+}
+
+export const getDescription = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
+        JSON.parse(ABI).abi,
+        getSigner()
+    )
+
+    const description = await idbot.getDescription(user)
     console.log(description)
     
     return description
 }
 
-export const getEmail = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
+export const getEmail = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
         JSON.parse(ABI).abi,
         getSigner()
     )
 
-    const email = await idbot_profile.getEmail()
+    const email = await idbot.getEmail(user)
     console.log(email)
     
     return email
 }
 
-export const getAge = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
+export const getAge = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
         JSON.parse(ABI).abi,
         getSigner()
     )
 
-    const age = await idbot_profile.getAge()
+    const age = await idbot.getAge(user)
     console.log(age)
     
     return age
 }
 
-export const getCountry = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
+export const getCountry = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
         JSON.parse(ABI).abi,
         getSigner()
     )
 
-    const country = await idbot_profile.getCountry()
+    const country = await idbot.getCountry(user)
     console.log(country)
     
     return country
 }
 
-export const getState = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
+export const getState = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
         JSON.parse(ABI).abi,
         getProvider()
     )
 
-    const state = await idbot_profile.getState()
+    const state = await idbot.getState(user)
     console.log(state)
     
     return state
 }
 
-export const getPhone = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
+export const getPhone = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
         JSON.parse(ABI).abi,
         getSigner()
     )
 
-    const phone = await idbot_profile.getPhone()
+    const phone = await idbot.getPhone(user)
     console.log(phone)
     
     return phone
 }
 
-export const getAddress = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
+export const getAddress = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
         JSON.parse(ABI).abi,
         getSigner()
     )
 
-    const address = await idbot_profile.getAddress()
+    const address = await idbot.getAddress(user)
     console.log(address)
     
     return address
 }
 
-export const getProfilePic = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
+export const getProfilePic = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
         JSON.parse(ABI).abi,
         getSigner()
     )
 
-    const pic = await idbot_profile.getProfilePic()
+    const pic = await idbot.getProfilePic(user)
     console.log(pic)
     
     return pic
 }
 
-export const getScore = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
+export const getScore = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
         JSON.parse(ABI).abi,
         getSigner()
     )
 
-    const score = await idbot_profile.getReputationScore()
+    const score = await idbot.getReputationScore(user)
     console.log(Number(score))
     
     return Number(score)
 }
 
-export const getProjects = async profile => {
-    const ABI = JSON.stringify(Profile_ABI)
-    const idbot_profile = new ethers.Contract(
-        profile,
+export const getProjects = async user => {
+    const ABI = JSON.stringify(IDBot_ABI)
+    const idbot = new ethers.Contract(
+        IDBot_CA,
         JSON.parse(ABI).abi,
         getSigner()
     )
 
-    const projects = await idbot_profile.getProjects()
+    const projects = await idbot.getProjects(user)
     console.log(projects)
 
     const _projects = [
