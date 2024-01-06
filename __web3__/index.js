@@ -219,16 +219,21 @@ export const getProjects = async user => {
     const projects = await idbot.getProjects(user)
     console.log(projects)
 
-    const _projects = [
-        projects[0][0],
-        projects[0][1],
-        projects[0][2],
-        projects[0][3],
-        projects[0][8],
-        projects[0][9],
-        projects[0][10],
-        Number(projects[0][11])
-    ]
+    const _projects = []
+
+    for(let i = 0; i < projects.length; i++) {
+        const projects_ = [
+            projects[i][0],
+            projects[i][1],
+            projects[i][2],
+            projects[i][3],
+            projects[i][8],
+            projects[i][9],
+            projects[i][10],
+            Number(projects[i][11])
+        ]
+        _projects.push(projects_)
+    }
 
     return _projects
 }
