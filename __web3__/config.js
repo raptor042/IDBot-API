@@ -1,1 +1,1 @@
-export const IDBot_CA = "0x4d214e3BC11286E3A5b012fE7Fa19abA57a18c81"
+export const IDBot_CA = "0xA16B3b1af5d4ad8ff0C5BFF54A01eA0CD240a877"
