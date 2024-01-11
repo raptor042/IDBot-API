@@ -58,16 +58,16 @@ app.post("/login", async (req, res) => {
     password ? res.status(200).send("Successful") : res.status(400).send("Failed")
 })
 
-app.get("/encrypt/:text", (req, res) => {
-    const encryptedText = encrypt(req.params.text)
-    console.log(req.params.text, encryptedText)
+app.post("/encrypt", (req, res) => {
+    const encryptedText = encrypt(req.body.text)
+    console.log(req.body.text, encryptedText)
 
     encryptedText ? res.status(200).send(encryptedText) : res.status(400).send("Encryption failed")
 })
 
-app.get("/decrypt/:text", (req, res) => {
-    const decryptedText = decrypt(req.params.text)
-    console.log(req.params.text, decryptedText)
+app.post("/decrypt", (req, res) => {
+    const decryptedText = decrypt(req.body.text)
+    console.log(req.body.text, decryptedText)
 
     decryptedText ? res.status(200).send(decryptedText) : res.status(400).send("Decryption failed")
 })
