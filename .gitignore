@@ -1,3 +1,7 @@
 node_modules
 
 .env
+
+pub.pem
+
+sec.pem

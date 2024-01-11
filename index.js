@@ -1,7 +1,7 @@
 import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
-import { decryptPassord, encryptPassword } from "./controllers/index.js"
+import { decrypt, decryptPassord, encrypt, encryptPassword } from "./controllers/index.js"
 import { config } from "dotenv"
 import {
     getAge,
@@ -56,6 +56,20 @@ app.post("/login", async (req, res) => {
     )
 
     password ? res.status(200).send("Successful") : res.status(400).send("Failed")
+})
+
+app.get("/encrypt/:text", (req, res) => {
+    const encryptedText = encrypt(req.params.text)
+    console.log(req.params.text, encryptedText)
+
+    encryptedText ? res.status(200).send(encryptedText) : res.status(400).send("Encryption failed")
+})
+
+app.get("/decrypt/:text", (req, res) => {
+    const decryptedText = decrypt(req.params.text)
+    console.log(req.params.text, decryptedText)
+
+    decryptedText ? res.status(200).send(decryptedText) : res.status(400).send("Decryption failed")
 })
 
 app.get("/verify/:profile", async (req, res) => {
